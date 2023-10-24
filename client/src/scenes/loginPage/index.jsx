@@ -1,9 +1,25 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery,Button } from "@mui/material";
 import Form from "./Form";
 
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+
+  const email = "raunak@gmail.com";
+  const password = "raunak1234";
+
+  const credentialsText = `Email: ${email}, Password: ${password}`;
+
+  const copyCredentials = async () => {
+    try {
+      await navigator.clipboard.writeText(credentialsText);
+      alert("Credentials copied to the clipboard!");
+    } catch (error) {
+      console.error("Unable to copy credentials: ", error);
+      alert("Copy to clipboard failed. Please copy manually.");
+    }
+  };
+
   return (
     <Box>
       <Box
@@ -28,6 +44,12 @@ const LoginPage = () => {
           Welcome to MyPeople, Your Social Universe Begins Here!
         </Typography>
         <Form />
+        
+        <Typography variant="body1">{credentialsText}</Typography>
+        {/* Add a button to copy credentials using navigator.clipboard API */}
+        <Button  variant="contained" onClick={copyCredentials}>
+          Copy Credentials
+        </Button>
       </Box>
     </Box>
   );
